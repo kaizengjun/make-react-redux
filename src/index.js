@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Header from './Header'
 import Content from './Content'
@@ -21,11 +20,16 @@ function createStore (reducer) {
 
 const themeReducer = (state, action) => {
   if (!state) return {
-    themeColor: 'red'
+    themeColor: 'red',
+    fontSize: '12px'
   }
   switch (action.type) {
     case 'CHANGE_COLOR':
       return { ...state, themeColor: action.themeColor }
+    case 'CHANGE_SIZE':
+      let size = parseInt(state.fontSize.slice(0, -2), 10)
+      action.fontSize === 'plus' ? size++ : size--
+      return { ...state, fontSize: size + 'px' }
     default:
       return state
   }
